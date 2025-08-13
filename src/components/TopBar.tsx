@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Github, Zap, Cloud, Clock } from 'lucide-react';
+import { Github, Zap, Cloud, Clock, GitBranch, GitCommit, TrendingUp } from 'lucide-react';
 
 export const TopBar = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -26,33 +26,85 @@ export const TopBar = () => {
           <span className="font-semibold text-gradient">SanjayOS AI</span>
         </div>
 
-        {/* Center section - Widgets */}
-        <div className="flex items-center space-x-8">
-          {/* Weather Widget */}
-          <div className="flex items-center space-x-2 glass-button py-1 px-3">
-            <Cloud className="w-4 h-4 text-ai-secondary" />
-            <span className="text-sm">22°C</span>
-          </div>
-
-          {/* GitHub Stats */}
-          <div className="flex items-center space-x-2 glass-button py-1 px-3">
-            <Github className="w-4 h-4 text-ai-secondary" />
-            <span className="text-sm">1,245 commits</span>
-          </div>
-
-          {/* LeetCode Progress */}
-          <div className="flex items-center space-x-2 glass-button py-1 px-3">
-            <Zap className="w-4 h-4 text-ai-secondary" />
-            <div className="flex items-center space-x-1">
-              <div className="w-6 h-6 rounded-full border-2 border-ai-secondary relative">
-                <div 
-                  className="absolute inset-0 rounded-full bg-ai-secondary"
-                  style={{ 
-                    clipPath: 'polygon(50% 50%, 50% 0%, 78% 0%, 78% 50%)' // 52% progress
-                  }}
-                />
+        {/* Center section - Enhanced Stats Dashboard */}
+        <div className="flex items-center space-x-6">
+          {/* GitHub Activity Panel */}
+          <div className="glass-button py-2 px-4 animate-neon-glow">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Github className="w-4 h-4 text-ai-secondary animate-data-pulse" />
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground">Commits</span>
+                  <span className="text-sm font-mono text-ai-neon">1,245</span>
+                </div>
               </div>
-              <span className="text-sm">78/150</span>
+              
+              <div className="w-px h-8 bg-glass-border" />
+              
+              <div className="flex items-center space-x-2">
+                <GitBranch className="w-4 h-4 text-ai-tertiary" />
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground">Repos</span>
+                  <span className="text-sm font-mono text-ai-tertiary">42</span>
+                </div>
+              </div>
+              
+              <div className="w-px h-8 bg-glass-border" />
+              
+              <div className="flex items-center space-x-2">
+                <TrendingUp className="w-4 h-4 text-ai-primary" />
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground">Streak</span>
+                  <span className="text-sm font-mono text-ai-primary">15d</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* LeetCode Progress with Enhanced Visualization */}
+          <div className="glass-button py-2 px-4">
+            <div className="flex items-center space-x-3">
+              <Zap className="w-4 h-4 text-ai-secondary animate-data-pulse" />
+              <div className="flex items-center space-x-2">
+                <div className="relative w-8 h-8">
+                  <svg className="w-8 h-8 transform -rotate-90" viewBox="0 0 32 32">
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="14"
+                      stroke="hsl(var(--glass-border))"
+                      strokeWidth="2"
+                      fill="none"
+                    />
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="14"
+                      stroke="hsl(var(--ai-neon))"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray={`${(78/150) * 87.96} 87.96`}
+                      className="animate-progress-fill"
+                      style={{ '--progress-width': '52%' } as React.CSSProperties}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-xs font-mono text-ai-neon">52%</span>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground">LeetCode</span>
+                  <span className="text-sm font-mono">78/150</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Weather Widget with Subtle Enhancement */}
+          <div className="glass-button py-2 px-3">
+            <div className="flex items-center space-x-2">
+              <Cloud className="w-4 h-4 text-ai-secondary" />
+              <span className="text-sm font-mono">22°C</span>
             </div>
           </div>
         </div>

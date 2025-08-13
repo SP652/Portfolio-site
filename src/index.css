@@ -12,11 +12,13 @@
     --os-surface-glass: 220 30% 15%;      /* Glass panel background */
     --os-foreground: 0 0% 95%;            /* Near white text */
     
-    /* AI Accent Colors */
+    /* AI Accent Colors - Enhanced cyberpunk */
     --ai-primary: 280 100% 70%;           /* Vibrant purple */
     --ai-secondary: 190 100% 50%;         /* Cyan accent */
+    --ai-tertiary: 320 100% 60%;          /* Magenta accent */
     --ai-glow: 280 100% 80%;              /* Purple glow */
     --ai-pulse: 190 100% 70%;             /* Cyan pulse */
+    --ai-neon: 140 100% 50%;              /* Neon green */
     
     /* Glass Morphism */
     --glass-bg: 220 30% 15% / 0.1;        /* Ultra-transparent glass */
@@ -103,6 +105,21 @@
     0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
     50% { transform: scale(1.1) rotate(180deg); opacity: 1; }
   }
+  
+  @keyframes data-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+  
+  @keyframes neon-glow {
+    0%, 100% { box-shadow: 0 0 5px hsl(var(--ai-secondary) / 0.3), 0 0 20px hsl(var(--ai-secondary) / 0.1); }
+    50% { box-shadow: 0 0 20px hsl(var(--ai-secondary) / 0.6), 0 0 40px hsl(var(--ai-secondary) / 0.3); }
+  }
+  
+  @keyframes progress-fill {
+    0% { width: 0%; }
+    100% { width: var(--progress-width); }
+  }
 }
 
 @layer components {
@@ -162,5 +179,17 @@
   
   .animate-ai-think {
     animation: ai-think 2s ease-in-out infinite;
+  }
+  
+  .animate-data-pulse {
+    animation: data-pulse 2s ease-in-out infinite;
+  }
+  
+  .animate-neon-glow {
+    animation: neon-glow 3s ease-in-out infinite;
+  }
+  
+  .animate-progress-fill {
+    animation: progress-fill 2s ease-out forwards;
   }
 }

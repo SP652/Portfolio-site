@@ -54,12 +54,12 @@ export const FloatingWindow = ({
 
   return (
     <div
-      className="fixed z-50 glass-panel min-w-96 animate-scale-in"
+      className="fixed z-50 glass-panel min-w-96 animate-window-open focus-ring"
       style={{
         left: position.x,
         top: position.y,
         transform: isMinimized ? 'scale(0.95)' : 'scale(1)',
-        transition: isDragging ? 'none' : 'transform 0.2s ease-out',
+        transition: isDragging ? 'none' : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
       {/* Title Bar */}

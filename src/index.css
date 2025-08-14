@@ -5,46 +5,65 @@
 /* SanjayOS AI Design System - Ultra-modern glass morphism with ambient lighting */
 
 @layer base {
-  :root {
+  :root[data-theme="dark"] {
     /* Core OS Colors - Deep space theme */
-    --os-background: 222 84% 5%;          /* Deep midnight blue #0F172A */
-    --os-surface: 220 25% 10%;            /* Dark surface */
-    --os-surface-glass: 220 30% 15%;      /* Glass panel background */
-    --os-foreground: 0 0% 95%;            /* Near white text */
-  }
-
-  .light {
-    /* Light theme colors */
-    --os-background: 220 100% 98%;        /* Light blue-white */
-    --os-surface: 220 20% 95%;            /* Light surface */
-    --os-surface-glass: 220 30% 90%;      /* Light glass panel */
-    --os-foreground: 220 40% 15%;         /* Dark text */
-    
-    --glass-bg: 220 30% 95% / 0.8;        /* Light glass */
-    --glass-border: 220 20% 80% / 0.3;    /* Light border */
-    --glass-shadow: 220 20% 20% / 0.1;    /* Light shadow */
+    --os-background: 222 84% 5%;
+    --os-surface: 220 25% 10%;
+    --os-surface-glass: 220 30% 15%;
+    --os-foreground: 0 0% 95%;
     
     /* AI Accent Colors - Enhanced cyberpunk */
-    --ai-primary: 280 100% 70%;           /* Vibrant purple */
-    --ai-secondary: 190 100% 50%;         /* Cyan accent */
-    --ai-tertiary: 320 100% 60%;          /* Magenta accent */
-    --ai-glow: 280 100% 80%;              /* Purple glow */
-    --ai-pulse: 190 100% 70%;             /* Cyan pulse */
-    --ai-neon: 140 100% 50%;              /* Neon green */
+    --ai-primary: 280 100% 70%;
+    --ai-secondary: 190 100% 50%;
+    --ai-tertiary: 320 100% 60%;
+    --ai-glow: 280 100% 80%;
+    --ai-pulse: 190 100% 70%;
+    --ai-neon: 140 100% 50%;
     
     /* Glass Morphism */
-    --glass-bg: 220 30% 15% / 0.1;        /* Ultra-transparent glass */
-    --glass-border: 0 0% 100% / 0.1;      /* Subtle glass border */
-    --glass-shadow: 0 0% 0% / 0.3;        /* Deep shadow */
+    --glass-bg: 220 30% 15% / 0.1;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-shadow: 0 0% 0% / 0.3;
     
     /* Interactive States */
-    --hover-glow: 280 100% 70% / 0.2;     /* Purple hover glow */
-    --active-glow: 190 100% 50% / 0.3;    /* Cyan active glow */
+    --hover-glow: 280 100% 70% / 0.2;
+    --active-glow: 190 100% 50% / 0.3;
     
     /* Status Colors */
-    --success: 120 100% 40%;              /* Green success */
-    --warning: 45 100% 60%;               /* Amber warning */
-    --error: 0 100% 60%;                  /* Red error */
+    --success: 120 100% 40%;
+    --warning: 45 100% 60%;
+    --error: 0 100% 60%;
+  }
+
+  :root[data-theme="light"] {
+    /* Light theme colors */
+    --os-background: 220 100% 98%;
+    --os-surface: 220 20% 95%;
+    --os-surface-glass: 220 30% 90%;
+    --os-foreground: 220 40% 15%;
+    
+    /* AI Accent Colors - Adjusted for light mode */
+    --ai-primary: 280 100% 50%;
+    --ai-secondary: 190 100% 40%;
+    --ai-tertiary: 320 100% 50%;
+    --ai-glow: 280 100% 60%;
+    --ai-pulse: 190 100% 50%;
+    --ai-neon: 140 100% 40%;
+    
+    /* Glass Morphism */
+    --glass-bg: 220 30% 95% / 0.8;
+    --glass-border: 220 20% 80% / 0.3;
+    --glass-shadow: 220 20% 20% / 0.1;
+    
+    /* Interactive States */
+    --hover-glow: 280 100% 50% / 0.2;
+    --active-glow: 190 100% 40% / 0.3;
+    
+    /* Status Colors */
+    --success: 120 100% 30%;
+    --warning: 45 100% 50%;
+    --error: 0 100% 50%;
+  }
     
     /* Legacy shadcn compatibility */
     --background: 222 84% 5%;
@@ -148,6 +167,27 @@
     50% { transform: scale(0.95); }
     100% { transform: scale(1); }
   }
+
+  @keyframes window-open {
+    0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  @keyframes window-close {
+    0% { transform: scale(1) translateY(0); opacity: 1; }
+    100% { transform: scale(0.8) translateY(20px); opacity: 0; }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer components {
@@ -236,5 +276,54 @@
 
   .animate-scale-in {
     animation: scale-in 0.3s ease-out;
+  }
+
+  .animate-window-open {
+    animation: window-open 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-window-close {
+    animation: window-close 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Fixed dimensions for layout stability */
+  .stats-pill {
+    min-width: 120px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .dashboard-frame {
+    max-width: 1200px;
+    width: min(92vw, 1200px);
+    height: min(78vh, 860px);
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .content-scroll {
+    height: calc(100% - 120px); /* Account for header + tabs */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--glass-border)) transparent;
+  }
+
+  .content-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .content-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .content-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--glass-border));
+    border-radius: 2px;
+  }
+
+  /* Focus styles for accessibility */
+  .focus-ring:focus-visible {
+    outline: 2px solid hsl(var(--ai-primary));
+    outline-offset: 2px;
   }
 }

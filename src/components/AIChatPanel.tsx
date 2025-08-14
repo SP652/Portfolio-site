@@ -80,7 +80,7 @@ export const AIChatPanel = ({ activeTab, onTabChange }: AIChatPanelProps) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center p-8 pointer-events-none">
-      <div className="w-full max-w-4xl h-[80vh] glass-panel animate-float pointer-events-auto">
+      <div className="dashboard-frame glass-panel animate-float pointer-events-auto">
         <Tabs value={activeTab} onValueChange={onTabChange} className="h-full flex flex-col">
           {/* Tab Navigation */}
           <TabsList className="grid w-full grid-cols-6 glass-panel m-4 mb-0">
@@ -159,7 +159,7 @@ export const AIChatPanel = ({ activeTab, onTabChange }: AIChatPanelProps) => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto space-y-4 mb-4 scroll-smooth">
+            <div className="content-scroll space-y-4 mb-4">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -204,7 +204,7 @@ export const AIChatPanel = ({ activeTab, onTabChange }: AIChatPanelProps) => {
           </TabsContent>
 
           {/* Resume Tab */}
-          <TabsContent value="resume" className="flex-1 p-4 overflow-y-auto">
+          <TabsContent value="resume" className="content-scroll p-4">
             <div className="space-y-6">
               <div className="text-center space-y-4 mb-8">
                 <FileText className="w-16 h-16 mx-auto text-ai-primary" />
@@ -245,7 +245,7 @@ export const AIChatPanel = ({ activeTab, onTabChange }: AIChatPanelProps) => {
           </TabsContent>
 
           {/* Projects Tab */}
-          <TabsContent value="projects" className="flex-1 p-4 overflow-y-auto">
+          <TabsContent value="projects" className="content-scroll p-4">
             <div className="space-y-6">
               <div className="text-center space-y-4 mb-8">
                 <Folder className="w-16 h-16 mx-auto text-ai-primary" />
@@ -291,7 +291,7 @@ export const AIChatPanel = ({ activeTab, onTabChange }: AIChatPanelProps) => {
           </TabsContent>
 
           {/* Skills Tab */}
-          <TabsContent value="skills" className="flex-1 p-4 overflow-y-auto">
+          <TabsContent value="skills" className="content-scroll p-4">
             <div className="space-y-6">
               <div className="text-center space-y-4 mb-8">
                 <Star className="w-16 h-16 mx-auto text-ai-primary" />
@@ -340,7 +340,7 @@ export const AIChatPanel = ({ activeTab, onTabChange }: AIChatPanelProps) => {
           </TabsContent>
 
           {/* Contact Tab */}
-          <TabsContent value="contact" className="flex-1 p-4 overflow-y-auto">
+          <TabsContent value="contact" className="content-scroll p-4">
             <div className="space-y-6">
               <div className="text-center space-y-4 mb-8">
                 <User className="w-16 h-16 mx-auto text-ai-primary" />
@@ -381,7 +381,7 @@ export const AIChatPanel = ({ activeTab, onTabChange }: AIChatPanelProps) => {
           </TabsContent>
 
           {/* AI Playground Tab */}
-          <TabsContent value="playground" className="flex-1 p-4 overflow-y-auto">
+          <TabsContent value="playground" className="content-scroll p-4">
             <div className="space-y-6">
               <div className="text-center space-y-4 mb-8">
                 <Zap className="w-16 h-16 mx-auto text-ai-primary" />

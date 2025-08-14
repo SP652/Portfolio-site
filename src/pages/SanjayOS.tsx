@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { OSBackground } from '@/components/OSBackground';
 import { TopBar } from '@/components/TopBar';
 import { AIChatPanel } from '@/components/AIChatPanel';
@@ -6,14 +6,41 @@ import { Dock } from '@/components/Dock';
 import { SettingsPanel } from '@/components/SettingsPanel';
 import { GitHubWindow } from '@/components/GitHubWindow';
 import { LeetCodeWindow } from '@/components/LeetCodeWindow';
-import { ThemeProvider } from '@/hooks/useTheme';
-import { SettingsProvider } from '@/hooks/useSettings';
+import { ThemeProvider, useTheme } from '@/hooks/useTheme';
+import { SettingsProvider, useSettings } from '@/hooks/useSettings';
+import { WindowManagerProvider, useWindowManager } from '@/hooks/useWindowManager';
 
 const SanjayOSContent = () => {
   const [activeTab, setActiveTab] = useState('chat');
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isGitHubOpen, setIsGitHubOpen] = useState(false);
-  const [isLeetCodeOpen, setIsLeetCodeOpen] = useState(false);
+  const { actualTheme } = useTheme();
+  const { settings } = useSettings();
+  const { windows, openWindow, closeWindow, getWindowState } = useWindowManager();
+
+  // Apply theme to document
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', actualTheme);
+  }, [actualTheme]);
+
+  const handleOpenWindow = (windowId: string, position?: { x: number; y: number }) => {
+    const existingWindow = getWindowState(windowId);
+    if (existingWindow?.isOpen) {
+      return; // Window already open
+    }
+    
+    // Play sound if enabled
+    if (settings.soundEffects) {
+      console.log(`🔊 Playing window open sound for ${windowId}`);
+    }
+    
+    openWindow(windowId, position);
+  };
+
+  const handleCloseWindow = (windowId: string) => {
+    if (settings.soundEffects) {
+      console.log(`🔊 Playing window close sound for ${windowId}`);
+    }
+    closeWindow(windowId);
+  };
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
@@ -21,7 +48,10 @@ const SanjayOSContent = () => {
       <OSBackground />
       
       {/* Top Menu Bar */}
-      <TopBar />
+      <TopBar 
+        onOpenGitHub={() => handleOpenWindow('github', { x: 200, y: 150 })}
+        onOpenLeetCode={() => handleOpenWindow('leetcode', { x: 500, y: 150 })}
+      />
       
       {/* Central AI Chat Panel */}
       <AIChatPanel activeTab={activeTab} onTabChange={setActiveTab} />
@@ -30,19 +60,24 @@ const SanjayOSContent = () => {
       <Dock 
         activeTab={activeTab}
         onTabChange={setActiveTab}
-        onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenGitHub={() => setIsGitHubOpen(true)}
-        onOpenLeetCode={() => setIsLeetCodeOpen(true)}
+        onOpenSettings={() => handleOpenWindow('settings')}
+        onOpenGitHub={() => handleOpenWindow('github', { x: 200, y: 150 })}
+        onOpenLeetCode={() => handleOpenWindow('leetcode', { x: 500, y: 150 })}
+        openWindows={Object.keys(windows).filter(id => windows[id]?.isOpen)}
       />
 
       {/* Floating Windows */}
-      {isGitHubOpen && <GitHubWindow onClose={() => setIsGitHubOpen(false)} />}
-      {isLeetCodeOpen && <LeetCodeWindow onClose={() => setIsLeetCodeOpen(false)} />}
+      {getWindowState('github')?.isOpen && (
+        <GitHubWindow onClose={() => handleCloseWindow('github')} />
+      )}
+      {getWindowState('leetcode')?.isOpen && (
+        <LeetCodeWindow onClose={() => handleCloseWindow('leetcode')} />
+      )}
       
       {/* Settings Panel */}
       <SettingsPanel 
-        isOpen={isSettingsOpen} 
-        onClose={() => setIsSettingsOpen(false)} 
+        isOpen={getWindowState('settings')?.isOpen || false}
+        onClose={() => handleCloseWindow('settings')} 
       />
     </div>
   );
@@ -52,7 +87,9 @@ const SanjayOS = () => {
   return (
     <ThemeProvider>
       <SettingsProvider>
-        <SanjayOSContent />
+        <WindowManagerProvider>
+          <SanjayOSContent />
+        </WindowManagerProvider>
       </SettingsProvider>
     </ThemeProvider>
   );

@@ -9,6 +9,9 @@ interface Settings {
   githubIntegration: boolean;
   leetcodeIntegration: boolean;
   soundEffects: boolean;
+  githubUsername: string;
+  leetcodeUsername: string;
+  refreshInterval: number;
 }
 
 const defaultSettings: Settings = {
@@ -20,6 +23,9 @@ const defaultSettings: Settings = {
   githubIntegration: true,
   leetcodeIntegration: true,
   soundEffects: true,
+  githubUsername: '',
+  leetcodeUsername: '',
+  refreshInterval: 300,
 };
 
 interface SettingsContextType {
